@@ -72,10 +72,7 @@ rooms = {
 }
 
 # start the player in the Hall
-currentRoom = 'Kitchen'
-while currentRoom in ['Kitchen', 'Garden']:
-    rooms_list = list(rooms.keys())
-    currentRoom = rooms_list[random.randint(0, len(rooms_list) - 1)]
+currentRoom = random.choice(list(filter(lambda x: x not in ["Kitchen", "Garden"], rooms.keys())) 
 
 showInstructions()
 
