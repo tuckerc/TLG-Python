@@ -72,7 +72,7 @@ rooms = {
 }
 
 # start the player in the Hall
-currentRoom = random.choice(list(filter(lambda x: x not in ["Kitchen", "Garden"], rooms.keys())) 
+currentRoom = random.choice(list(filter(lambda x: x not in ["Kitchen", "Garden"], rooms.keys())))
 
 showInstructions()
 
