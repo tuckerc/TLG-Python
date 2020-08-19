@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
 import requests
+from pprint import pprint
+from wget import download
+from os import environ
 
-## Define NEOapi
-neourl = 'https://api.nasa.gov/neo/rest/v1/feed?'
-startdate = f'start_date={input("pick a start date (yyyy-mm-dd): ")}'
-enddate = f'&end_date={input("pick an end date (yyyy-mm-dd): ")}'
-mykey = '&api_key=g70uKEwpPJQVB4Vo7K4S7AlOITT86VfGPZG3t3BZ'
+# Define NEOapi
+url = 'https://api.nasa.gov/planetary/apod?'
+date = f'date={input("pick a date after 1995-06-16 (yyyy-mm-dd): ")}'
+mykey = f'&api_key={environ.get("API_KEY")}'
 
-neourl = neourl + startdate + mykey
+apodurl = url + date + mykey
 
-## Call the webservice
-neos = dict((requests.get(neourl)).json())['near_earth_objects']
-print(f"\n!!!!!! POTENTIALLY HAZARDOUS ASTEROIDS !!!!!!")
-for key, val in neos.items():
-    for i in range(len(val)):
-        if val[i]['is_potentially_hazardous_asteroid']:
-            link = val[i]['nasa_jpl_url']
-            print(link)
+# Call the webservice
+# r = requests.get(apodurl)
+# pprint(r)
+apod = dict((requests.get(apodurl)).json())
+pic_data = {'date': apod.get('date'), 'title': apod.get('title'), 'description': apod.get('explanation')}
+pprint(f"\nPicture of the day:\n{pic_data}")
+download(apod.get('url'))
